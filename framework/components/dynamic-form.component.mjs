@@ -55,7 +55,7 @@ export default class extends HTMLElement {
 
   render = () => {
     this.innerHTML = html`
-      <h1 id="main-title">Dayco v4</h1>
+      <h1 id="main-title">${this.userChoices.choiceDefinitionRegistry?.title}</h1>
       ${this.userChoices.choices
         .map(
           (choice, choiceIndex) => html`

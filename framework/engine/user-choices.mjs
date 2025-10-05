@@ -26,6 +26,7 @@ import MutableListenableData from '../../shared/listenable-data/listenableData.m
 
 /**
  * @typedef {object} ChoiceDefinitionRegistry
+ * @property {string} title
  * @property {string} start
  * @property {Record<string,ChoiceDefinition>} definitions
  * */

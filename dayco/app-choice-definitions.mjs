@@ -17,6 +17,7 @@ import { exporterAbonnements } from './actions/exporterAbonnements.mjs'
 
 /** @type {ChoiceDefinitionRegistry} */
 export const APP_CHOICES = {
+  title: 'Dayco v4',
   start: 'header',
   definitions: {
     header: {
