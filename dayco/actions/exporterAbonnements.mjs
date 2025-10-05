@@ -1,5 +1,5 @@
 /**
- * @typedef {import('../../user-choices.mjs').UserAnswers} UserAnswers
+ * @typedef {import('../../framework/models/user-choices.mjs').UserAnswers} UserAnswers
  */
 
 import { storage } from '../storage/storage.mjs'

@@ -1,9 +1,9 @@
 /**
- * @typedef {import('../../user-choices.mjs').UserAnswers} UserAnswers
+ * @typedef {import('../../framework/models/user-choices.mjs').UserAnswers} UserAnswers
  */
 
 import { storage } from '../storage/storage.mjs'
-import { showToast } from '../../../shared/toast/toast.component.mjs'
+import { showToast } from '../../shared/toast/toast.component.mjs'
 
 /**
  *

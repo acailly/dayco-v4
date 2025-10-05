@@ -1,13 +1,13 @@
 import './fetch-list-item.component.mjs'
-import html from '../../../shared/html/html-tag.mjs'
-import { getFeedsFetcher } from '../../main.mjs'
-import compareString from '../../../shared/strings/compareString.mjs'
-import '../../components/option-list.component.mjs'
+import html from '../../shared/html/html-tag.mjs'
+import { getFeedsFetcher } from '../main.mjs'
+import compareString from '../../shared/strings/compareString.mjs'
+import '../../../framework/components/option-list.component.mjs'
 
 /** @typedef {import("../types.mjs").Feed} Feed  */
 /**
  * @template T
- * @typedef {import('../../../shared/listenable-data/listenableData.mjs').ListenableData<T>} ListenableData<T>
+ * @typedef {import('../../shared/listenable-data/listenableData.mjs').ListenableData<T>} ListenableData<T>
  */
 /** @typedef {import('../feed-fetcher/feedFetcher.mjs').FetchStatus} FetchStatus */
 

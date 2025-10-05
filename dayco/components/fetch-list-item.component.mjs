@@ -1,6 +1,6 @@
-import { getFeedsFetcher } from '../../main.mjs'
-import html from '../../../shared/html/html-tag.mjs'
-import spinner from '../../../shared/spinner/spinner.mjs'
+import { getFeedsFetcher } from '../main.mjs'
+import html from '../../shared/html/html-tag.mjs'
+import spinner from '../../shared/spinner/spinner.mjs'
 
 /** @typedef {import("../types.mjs").Feed} Feed  */
 /** @typedef {import('../feed-fetcher/feedFetcher.mjs').FetchStatus} FetchStatus */

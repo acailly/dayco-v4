@@ -1,7 +1,7 @@
 import { HTML_ACTION_EVENT, htmlAction } from '../../shared/html-action/html-action.mjs'
 import html from '../../shared/html/html-tag.mjs'
-import { getUserChoices } from '../main.mjs'
-import { WILDCARD_OPTION_VALUE } from '../user-choices.mjs'
+import { getUserChoices } from '../globals/user-choices.mjs'
+import { WILDCARD_OPTION_VALUE } from '../engine/user-choices.mjs'
 
 export default class extends HTMLElement {
   static {

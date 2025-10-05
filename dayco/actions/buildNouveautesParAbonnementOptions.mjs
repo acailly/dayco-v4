@@ -1,10 +1,10 @@
 /**
- * @typedef {import('../../user-choices.mjs').ChoiceOption} ChoiceOption
+ * @typedef {import('../../framework/models/user-choices.mjs').ChoiceOption} ChoiceOption
  * @typedef {import('../types.mjs').Feed} Feed
  * @typedef {import('../types.mjs').Post} Post
  */
 
-import compareString from '../../../shared/strings/compareString.mjs'
+import compareString from '../../shared/strings/compareString.mjs'
 import { storage } from '../storage/storage.mjs'
 import { FEED, POST } from '../types.mjs'
 

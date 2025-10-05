@@ -4,10 +4,10 @@
 /** @typedef {import('./feedFetcher.mjs').FetchStatus} FetchStatus */
 /**
  * @template T
- * @typedef {import('../../../shared/listenable-data/listenableData.mjs').ListenableData<T>} ListenableData<T>
+ * @typedef {import('../../shared/listenable-data/listenableData.mjs').ListenableData<T>} ListenableData<T>
  */
 
-import MutableListenableData from '../../../shared/listenable-data/listenableData.mjs'
+import MutableListenableData from '../../shared/listenable-data/listenableData.mjs'
 import FeedFetcher from './feedFetcher.mjs'
 
 /**

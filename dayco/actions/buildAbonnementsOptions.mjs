@@ -1,5 +1,5 @@
 /**
- * @typedef {import('../../user-choices.mjs').ChoiceOption} ChoiceOption
+ * @typedef {import('../../framework/models/user-choices.mjs').ChoiceOption} ChoiceOption
  * @typedef {import('../types.mjs').Feed} Feed
  */
 

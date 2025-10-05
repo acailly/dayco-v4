@@ -1,6 +1,6 @@
 /**
- * @typedef {import('../user-choices.mjs').ChoiceDefinitionRegistry} ChoiceDefinitionRegistry
- * @typedef {import('../user-choices.mjs').UserAnswers} UserAnswers
+ * @typedef {import('../framework/engine/user-choices.mjs').ChoiceDefinitionRegistry} ChoiceDefinitionRegistry
+ * @typedef {import('../framework/engine/user-choices.mjs').UserAnswers} UserAnswers
  */
 
 import { buildAbonnementsOptions } from './actions/buildAbonnementsOptions.mjs'

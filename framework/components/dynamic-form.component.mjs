@@ -1,17 +1,45 @@
 import html from '../../shared/html/html-tag.mjs'
-import { getUserChoices, getView } from '../main.mjs'
+import { getUserChoices } from '../globals/user-choices.mjs'
 
 /**
- * @typedef {import('../user-choices.mjs').UserAnswers} UserAnswers
+ * @typedef {import('../../framework/engine/user-choices.mjs').UserAnswers} UserAnswers
  */
 
 /**
- * @typedef {import('../user-choices.mjs').Choice} Choice
+ * @typedef {import('../../framework/engine/user-choices.mjs').Choice} Choice
  */
 
 /**
- * @typedef {import('../user-choices.mjs').ChoicesFromAnswers} ChoicesFromAnswers
+ * @typedef {import('../../framework/engine/user-choices.mjs').ChoicesFromAnswers} ChoicesFromAnswers
  */
+
+/**
+ * @typedef {Record<string, (choice: Choice) => string>} ChoiceViewFactory
+ */
+
+/** @type {ChoiceViewFactory} */
+const __choiceViewFactory = {}
+
+export const registerChoiceViewFactory = (
+  /** @type {string} */ choiceType,
+  /** @type {(choice: Choice) => string} */ viewFactory
+) => {
+  __choiceViewFactory[choiceType] = viewFactory
+}
+
+// Default views
+registerChoiceViewFactory('optionList', (choice) => html`<option-list choice-id="${choice.choiceID}"></<option-list>`)
+registerChoiceViewFactory('inputJson', (choice) => html`<input-json choice-id="${choice.choiceID}"></<input-json>`)
+registerChoiceViewFactory('inputText', (choice) => html`<input-text choice-id="${choice.choiceID}"></<input-text>`)
+
+const getView = (/** @type {Choice} */ choice) => {
+  const customViewFactory = choice.choiceType ? __choiceViewFactory[choice.choiceType] : undefined
+  if (customViewFactory) {
+    return customViewFactory(choice)
+  }
+
+  return html``
+}
 
 export default class extends HTMLElement {
   static {
@@ -21,8 +49,8 @@ export default class extends HTMLElement {
   userChoices = getUserChoices()
 
   async connectedCallback() {
+    // TODO ACY memory leak
     this.userChoices.$changed.onChange(this.render)
-    await this.userChoices.initialize({})
   }
 
   render = () => {

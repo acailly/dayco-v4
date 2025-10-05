@@ -1,12 +1,12 @@
 /**
- * @typedef {import('../user-choices.mjs').Choice} Choice
- * @typedef {import('../user-choices.mjs').ChoiceOption} ChoiceOption
+ * @typedef {import('../engine/user-choices.mjs').Choice} Choice
+ * @typedef {import('../engine/user-choices.mjs').ChoiceOption} ChoiceOption
  */
 
 import { HTML_ACTION_EVENT, htmlAction } from '../../shared/html-action/html-action.mjs'
 import html from '../../shared/html/html-tag.mjs'
 import spinner from '../../shared/spinner/spinner.mjs'
-import { getUserChoices } from '../main.mjs'
+import { getUserChoices } from '../globals/user-choices.mjs'
 
 export default class extends HTMLElement {
   static {

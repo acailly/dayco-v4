@@ -4,7 +4,7 @@
 
 import parseRssFeed from './parseRssFeed.mjs'
 import { POST } from '../types.mjs'
-import MutableListenableData from '../../../shared/listenable-data/listenableData.mjs'
+import MutableListenableData from '../../shared/listenable-data/listenableData.mjs'
 
 /**
  * @typedef {Object} FetchLoading

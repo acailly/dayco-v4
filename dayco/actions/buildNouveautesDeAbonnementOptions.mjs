@@ -1,6 +1,6 @@
 /**
- * @typedef {import('../../user-choices.mjs').ChoiceOption} ChoiceOption
- * @typedef {import('../../user-choices.mjs').UserAnswers} UserAnswers
+ * @typedef {import('../../framework/models/user-choices.mjs').ChoiceOption} ChoiceOption
+ * @typedef {import('../../framework/models/user-choices.mjs').UserAnswers} UserAnswers
  * @typedef {import('../types.mjs').Post} Post
  */
 

@@ -1,5 +1,5 @@
 /**
- * @typedef {import('../../user-choices.mjs').UserAnswers} UserAnswers
+ * @typedef {import('../../framework/models/user-choices.mjs').UserAnswers} UserAnswers
  * @typedef {import('../types.mjs').Feed} Feed
  * @typedef {import('../types.mjs').Post} Post
  * @typedef {import('../feed-fetcher/feedFetcher.mjs').FetchStatus} FetchStatus
@@ -7,10 +7,10 @@
 
 /**
  * @template T
- * @typedef {import('../../../shared/listenable-data/listenableData.mjs').MutableListenableDataEvent<T>} MutableListenableDataEvent<T>
+ * @typedef {import('../../shared/listenable-data/listenableData.mjs').MutableListenableDataEvent<T>} MutableListenableDataEvent<T>
  */
 
-import { getFeedsFetcher } from '../../main.mjs'
+import { getFeedsFetcher } from '../main.mjs'
 import { storage } from '../storage/storage.mjs'
 import { FEED, POST } from '../types.mjs'
 

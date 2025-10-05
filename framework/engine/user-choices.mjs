@@ -1,6 +1,6 @@
 /** @typedef {{[x: string]: string}} UserAnswers */
 
-import MutableListenableData from '../shared/listenable-data/listenableData.mjs'
+import MutableListenableData from '../../shared/listenable-data/listenableData.mjs'
 
 /**
  * @typedef {object} ChoiceOption
@@ -46,7 +46,7 @@ import MutableListenableData from '../shared/listenable-data/listenableData.mjs'
 
 /**
  * @template T
- * @typedef {import('../shared/listenable-data/listenableData.mjs').ListenableData<T>} ListenableData<T>
+ * @typedef {import('../../shared/listenable-data/listenableData.mjs').ListenableData<T>} ListenableData<T>
  */
 
 export const WILDCARD_OPTION_VALUE = '*'
@@ -66,15 +66,9 @@ export class UserChoices {
   /**
    * @param {ChoiceDefinitionRegistry} choiceDefinitionRegistry
    */
-  constructor(choiceDefinitionRegistry) {
+  initialize = async (choiceDefinitionRegistry) => {
     this.choiceDefinitionRegistry = choiceDefinitionRegistry
-  }
-
-  /**
-   * @param {UserAnswers} userAnswers
-   */
-  initialize = async (userAnswers) => {
-    this.userAnswers = userAnswers
+    this.userAnswers = {}
     await this.processUserAnswers()
   }
 
@@ -94,6 +88,10 @@ export class UserChoices {
   }
 
   processUserAnswers = async () => {
+    if (!this.choiceDefinitionRegistry) {
+      throw new Error('UserChoices has not been initialized with a ChoiceDefinitionRegistry')
+    }
+
     this.choices = await this.processUserAnswer(this.choiceDefinitionRegistry.start, [], this.choices, false)
     this._changed.set(this.choices)
   }
@@ -106,6 +104,10 @@ export class UserChoices {
    * @returns {Promise<Choice[]>}
    */
   processUserAnswer = async (currentChoiceID, currentChoices, previousChoices, executeSideEffects) => {
+    if (!this.choiceDefinitionRegistry) {
+      throw new Error('UserChoices has not been initialized with a ChoiceDefinitionRegistry')
+    }
+
     let choices = [...currentChoices]
 
     //////////////////////////
@@ -172,10 +174,16 @@ export class UserChoices {
     //////////////////
 
     if (currentChoice.userAnswer) {
-      const selectedChoiceOption = currentChoiceOptions.find(
-        (currentChoiceOption) =>
-          currentChoiceOption.value === currentChoice.userAnswer || currentChoiceOption.value === WILDCARD_OPTION_VALUE
-      )
+      let selectedChoiceOption =
+        // Option from value (first attempt)
+        currentChoiceOptions.find(
+          (currentChoiceOption) =>
+            currentChoiceOption.value === currentChoice.userAnswer &&
+            currentChoiceOption.value !== WILDCARD_OPTION_VALUE
+        ) ??
+        // or Wildcard option (second attempt)
+        currentChoiceOptions.find((currentChoiceOption) => currentChoiceOption.value === WILDCARD_OPTION_VALUE)
+
       if (selectedChoiceOption) {
         ///////////////////////////////////////
         // APPLY THE SELECTED OPTION EFFECTS //
