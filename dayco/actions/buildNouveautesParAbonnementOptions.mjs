@@ -1,7 +1,7 @@
 /**
- * @typedef {import('../../framework/models/user-choices.mjs').ChoiceOption} ChoiceOption
  * @typedef {import('../types.mjs').Feed} Feed
  * @typedef {import('../types.mjs').Post} Post
+ * @typedef {import('../types.mjs').DaycoChoiceOption} DaycoChoiceOption
  */
 
 import compareString from '../../shared/strings/compareString.mjs'
@@ -9,7 +9,7 @@ import { storage } from '../storage/storage.mjs'
 import { FEED, POST } from '../types.mjs'
 
 /**
- * @returns {Promise<ChoiceOption[]>}
+ * @returns {Promise<DaycoChoiceOption[]>}
  */
 export const buildNouveautesParAbonnementOptions = async () => {
   /** @type {Feed[]} */
@@ -33,20 +33,19 @@ export const buildNouveautesParAbonnementOptions = async () => {
       }
 
       /**
-       * @type {ChoiceOption}
+       * @type {DaycoChoiceOption}
        */
       const choiceOption = {
         value: feed.id,
         label: `${feed.title} (${feedPostCount})`,
         goto: 'nouveautesDeAbonnement',
-        tags: ['list-item'],
       }
       return choiceOption
     })
     .filter(
       /**
        * @param {unknown} v
-       * @returns {v is ChoiceOption}
+       * @returns {v is DaycoChoiceOption}
        */
       (v) => Boolean(v)
     )

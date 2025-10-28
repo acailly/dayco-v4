@@ -70,6 +70,15 @@ ul {
             color: white;
             font-weight: 600;
         }
+        
+        &[disabled]{
+            border: none;
+            cursor: unset;
+            
+            &:hover{
+                background-color: unset;
+            }
+        }
     }
 }
 

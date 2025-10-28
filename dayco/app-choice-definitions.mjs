@@ -1,6 +1,7 @@
 /**
- * @typedef {import('../framework/engine/user-choices.mjs').ChoiceDefinitionRegistry} ChoiceDefinitionRegistry
- * @typedef {import('../framework/engine/user-choices.mjs').UserAnswers} UserAnswers
+ * @typedef {import('./types.mjs').DaycoUserAnswers} DaycoUserAnswers
+ * @typedef {import('./types.mjs').DaycoChoice} DaycoChoice
+ * @typedef {import('./types.mjs').DaycoChoiceRegistry} DaycoChoiceRegistry
  */
 
 import { buildAbonnementsOptions } from './actions/buildAbonnementsOptions.mjs'
@@ -14,196 +15,208 @@ import { supprimerAbonnement } from './actions/supprimerAbonnement.mjs'
 import { enregistrerNouvelAbonnement } from './actions/enregistrerNouvelAbonnement.mjs'
 import { viderBaseDeDonnees } from './actions/viderBaseDeDonnees.mjs'
 import { exporterAbonnements } from './actions/exporterAbonnements.mjs'
+import html from '../shared/html/html-tag.mjs'
+import { FORM_SUMIT_OPTION_VALUE } from '../framework/engine/user-choices.mjs'
+import { AFTER_TITLE, CHIP } from '../framework/components/dynamic-form.component.mjs'
 
-/** @type {ChoiceDefinitionRegistry} */
+/** @type {DaycoChoiceRegistry} */
 export const APP_CHOICES = {
   title: 'Dayco v4',
   start: 'header',
   definitions: {
     header: {
-      choiceType: 'optionList',
-      prompt: 'Bienvenue, que voulez vous faire ?',
+      staticTitle: 'Bienvenue, que voulez vous faire ?',
       staticOptions: [
         {
           value: 'nouveautes',
           label: 'Nouveautés',
           goto: 'nouveautesParAbonnement',
-          tags: ['chip'],
+          tags: [CHIP],
           selectedByDefault: true,
         },
         {
           value: 'abonnements',
           label: 'Abonnements',
           goto: 'abonnements',
-          tags: ['chip'],
+          tags: [CHIP],
         },
         {
           value: 'sauvegarde',
           label: 'Sauvegarde',
           goto: 'sauvegarde',
-          tags: ['chip'],
+          tags: [CHIP],
         },
         {
           value: 'recupererNouveautes',
           label: 'Récupérer les nouveautés',
           execute: startFetchingFeedPosts,
           goto: 'recupererNouveautes',
-          tags: ['chip'],
+          tags: [CHIP],
         },
       ],
     },
     nouveautesParAbonnement: {
-      choiceType: 'optionList',
-      prompt: 'Toutes les nouveautés triées par abonnement',
+      staticTitle: 'Toutes les nouveautés triées par abonnement',
       dynamicOptions: buildNouveautesParAbonnementOptions,
       rememberOptions: false,
     },
     nouveautesDeAbonnement: {
-      choiceType: 'optionList',
-      prompt: "Les nouveautés de l'abonnement",
+      staticTitle: "Les nouveautés de l'abonnement",
       staticOptions: [
         {
           value: 'marquerToutCommeLu',
           label: 'Marquer tout comme lu',
           execute: marquerToutCommeLu,
           goto: 'nouveautesParAbonnement',
-          tags: ['chip'],
+          tags: [CHIP],
         },
       ],
       dynamicOptions: buildNouveautesDeAbonnementOptions,
     },
     nouveaute: {
-      choiceType: 'optionList',
-      prompt: 'Actions possibles sur la nouveauté',
+      staticTitle: 'Actions possibles sur la nouveauté',
       staticOptions: [
         {
           value: 'marquerCommeLu',
           label: 'Marquer comme lu',
           execute: marquerCommeLu,
           goto: 'nouveautesDeAbonnement',
-          tags: ['chip'],
+          tags: [CHIP],
         },
       ],
     },
     abonnements: {
-      choiceType: 'optionList',
-      prompt: 'Tous les abonnements',
+      staticTitle: 'Tous les abonnements',
       staticOptions: [
         {
           value: 'ajouterAbonnement',
           label: 'Ajouter un nouvel abonnement',
           goto: 'nomNouvelAbonnement',
-          tags: ['chip'],
+          tags: [CHIP],
         },
       ],
       dynamicOptions: buildAbonnementsOptions,
     },
     abonnement: {
-      choiceType: 'optionList',
-      prompt: "Actions possible sur l'abonnement",
+      staticTitle: "Actions possible sur l'abonnement",
       staticOptions: [
         {
           value: 'supprimerAbonnement',
           label: 'Supprimer',
           execute: supprimerAbonnement,
           goto: 'abonnements',
-          tags: ['chip'],
+          tags: [CHIP],
         },
       ],
     },
     nomNouvelAbonnement: {
-      choiceType: 'inputText',
-      prompt: 'Saisissez le nom du nouvel abonnement',
+      staticTitle: 'Saisissez le nom du nouvel abonnement',
+      // TODO ACY utiliser le dynamicForm pour placer un autofocus sur ce champ uniquement si userAnswer est vide
+      staticForm: html`<input name="nom" type="text" required />`,
       staticOptions: [
-        {
-          value: '*',
-          label: 'OK',
-          goto: 'urlNouvelAbonnement',
-          tags: ['chip'],
-        },
         {
           value: 'annuler',
           label: 'Annuler',
           goto: 'abonnements',
-          tags: ['chip'],
+          tags: [CHIP],
+        },
+        {
+          value: FORM_SUMIT_OPTION_VALUE,
+          label: 'OK',
+          goto: 'urlNouvelAbonnement',
+          tags: [CHIP],
         },
       ],
     },
     urlNouvelAbonnement: {
-      choiceType: 'inputText',
-      prompt: "Saisissez l'adresse (URL) du nouvel abonnement",
+      staticTitle: "Saisissez l'adresse (URL) du nouvel abonnement",
+      // TODO ACY utiliser le dynamicForm pour placer un autofocus sur ce champ uniquement si userAnswer est vide
+      staticForm: html`<input name="url" type="text" required />`,
       staticOptions: [
-        {
-          value: '*',
-          label: 'OK',
-          execute: enregistrerNouvelAbonnement,
-          goto: 'abonnements',
-          tags: ['chip'],
-        },
         {
           value: 'annuler',
           label: 'Annuler',
           goto: 'abonnements',
-          tags: ['chip'],
+          tags: [CHIP],
+        },
+        {
+          value: FORM_SUMIT_OPTION_VALUE,
+          label: 'OK',
+          execute: enregistrerNouvelAbonnement,
+          goto: 'abonnements',
+          tags: [CHIP],
         },
       ],
     },
     sauvegarde: {
-      choiceType: 'optionList',
-      prompt: 'Toutes les actions relatives à la sauvegarde',
+      staticTitle: 'Toutes les actions relatives à la sauvegarde',
       staticOptions: [
         {
           value: 'importerAbonnements',
           label: 'Importer des abonnements',
           goto: 'importerAbonnements',
-          tags: ['chip'],
+          tags: [CHIP],
         },
         {
           value: 'exporterAbonnements',
           label: 'Exporter des abonnements',
           execute: exporterAbonnements,
           goto: 'sauvegarde',
-          tags: ['chip'],
+          tags: [CHIP],
         },
         {
           value: 'viderBaseDeDonnees',
           label: 'Vider la base de données',
           execute: viderBaseDeDonnees,
           goto: 'sauvegarde',
-          tags: ['chip'],
+          tags: [CHIP],
         },
       ],
     },
     importerAbonnements: {
-      choiceType: 'inputJson',
-      prompt: 'Sélectionnez le fichier JSON contenant les abonnements à importer',
+      staticTitle: 'Sélectionnez le fichier JSON contenant les abonnements à importer',
+      staticForm: html`<input name="file" type="file" required />`,
       staticOptions: [
-        {
-          value: '*',
-          label: 'OK',
-          execute: importerAbonnements,
-          updateUserAnswers: async () => ({ header: 'abonnements' }),
-          goto: 'abonnements',
-          tags: ['chip'],
-        },
         {
           value: 'annuler',
           label: 'Annuler',
           goto: 'sauvegarde',
-          tags: ['chip'],
+          tags: [CHIP],
+        },
+        {
+          value: FORM_SUMIT_OPTION_VALUE,
+          label: 'OK',
+          execute: importerAbonnements,
+          // TODO ACY c'est pas ouf ca, faudrait trouver un meilleur moyen de gérer un changement de choix plus haut
+          updateUserAnswers:
+            /**
+             * @param {DaycoUserAnswers} userAnswers
+             */
+            async (userAnswers) => {
+              userAnswers.set('header', 'abonnements')
+            },
+          goto: 'abonnements',
+          tags: [CHIP],
         },
       ],
     },
     recupererNouveautes: {
-      choiceType: 'fetchList',
-      prompt: 'Récupération des nouveautés en cours...',
+      staticTitle: 'Récupération des nouveautés en cours...',
+      staticContent: html`<fetch-list choice-id="recupererNouveautes"></fetch-list>`,
       staticOptions: [
         {
           value: 'abonnements',
           label: 'Aller aux nouveautés',
-          updateUserAnswers: async () => ({ header: 'nouveautes' }),
+          // TODO ACY c'est pas ouf ca, faudrait trouver un meilleur moyen de gérer un changement de choix plus haut
+          updateUserAnswers:
+            /**
+             * @param {DaycoUserAnswers} userAnswers
+             */
+            async (userAnswers) => {
+              userAnswers.set('header', 'nouveautes')
+            },
           goto: 'nouveautesParAbonnement',
-          tags: ['chip'],
+          tags: [CHIP, AFTER_TITLE],
         },
       ],
     },

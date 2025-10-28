@@ -1,5 +1,4 @@
 /**
- * @typedef {import('../../framework/models/user-choices.mjs').UserAnswers} UserAnswers
  * @typedef {import('../types.mjs').Feed} Feed
  * @typedef {import('../types.mjs').Post} Post
  * @typedef {import('../feed-fetcher/feedFetcher.mjs').FetchStatus} FetchStatus

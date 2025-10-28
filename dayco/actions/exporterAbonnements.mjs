@@ -1,7 +1,3 @@
-/**
- * @typedef {import('../../framework/models/user-choices.mjs').UserAnswers} UserAnswers
- */
-
 import { storage } from '../storage/storage.mjs'
 import { FEED } from '../types.mjs'
 

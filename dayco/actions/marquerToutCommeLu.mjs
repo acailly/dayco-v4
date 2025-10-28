@@ -1,5 +1,5 @@
 /**
- * @typedef {import('../../framework/models/user-choices.mjs').UserAnswers} UserAnswers
+ * @typedef {import('../types.mjs').DaycoUserAnswers} DaycoUserAnswers
  * @typedef {import('../types.mjs').Post} Post
  */
 
@@ -8,11 +8,11 @@ import { POST } from '../types.mjs'
 
 /**
  *
- * @param {UserAnswers} userAnswers
+ * @param {DaycoUserAnswers} userAnswers
  * @returns {Promise<void>}
  */
 export const marquerToutCommeLu = async (userAnswers) => {
-  const abonnement = userAnswers['nouveautesParAbonnement']
+  const abonnement = userAnswers.get('nouveautesParAbonnement')
 
   /** @type {Post[]} */
   const posts = await storage.findAllThings(POST)

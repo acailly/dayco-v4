@@ -1,5 +1,25 @@
 // TODO ACY si on mettait ca dans un .d.ts et que ca marchait pareil, est ce que ce ne serait pas un gap un peu moins dur à franchir par les non habitués ?
 
+/**
+ * @template {string} T
+ * @typedef {import('../framework/engine/user-choices.mjs').CustomChoiceDefinitionRegistry<T>} CustomChoiceDefinitionRegistry<T>
+ */
+
+/**
+ * @template {string} T
+ * @typedef {import('../framework/engine/user-choices.mjs').CustomChoiceOption<T>} CustomChoiceOption<T>
+ */
+
+/**
+ * @template {string} T
+ * @typedef {import('../framework/engine/user-choices.mjs').CustomUserAnswers<T>} CustomUserAnswers<T>
+ */
+
+/** @typedef {'header' | 'nouveautesParAbonnement' | 'nouveautesDeAbonnement' | 'nouveaute' | 'abonnements' | 'abonnement' | 'nomNouvelAbonnement' | 'urlNouvelAbonnement' | 'sauvegarde' | 'importerAbonnements' | 'recupererNouveautes'} DaycoChoice */
+/** @typedef {CustomChoiceOption<DaycoChoice>} DaycoChoiceOption */
+/** @typedef {CustomChoiceDefinitionRegistry<DaycoChoice>} DaycoChoiceRegistry */
+/** @typedef {CustomUserAnswers<DaycoChoice>} DaycoUserAnswers */
+
 /** @typedef {typeof FEED} FEED */
 export const FEED = 'FEED'
 /** @typedef {typeof POST} POST */

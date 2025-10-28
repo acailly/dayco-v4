@@ -1,13 +1,14 @@
 /**
- * @typedef {import('../../framework/models/user-choices.mjs').ChoiceOption} ChoiceOption
+ * @typedef {import('../../framework/engine/user-choices.mjs').ChoiceOption} ChoiceOption
  * @typedef {import('../types.mjs').Feed} Feed
+ * @typedef {import('../types.mjs').DaycoChoiceOption} DaycoChoiceOption
  */
 
 import { storage } from '../storage/storage.mjs'
 import { FEED } from '../types.mjs'
 
 /**
- * @returns {Promise<ChoiceOption[]>}
+ * @returns {Promise<DaycoChoiceOption[]>}
  */
 export const buildAbonnementsOptions = async () => {
   /** @type {Feed[]} */
@@ -19,6 +20,5 @@ export const buildAbonnementsOptions = async () => {
     label: feed.title,
     url: feed.url,
     goto: 'abonnement',
-    tags: ['list-item'],
   }))
 }

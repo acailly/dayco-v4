@@ -1,18 +1,18 @@
 /**
- * @typedef {import('../../framework/models/user-choices.mjs').ChoiceOption} ChoiceOption
- * @typedef {import('../../framework/models/user-choices.mjs').UserAnswers} UserAnswers
+ * @typedef {import('../types.mjs').DaycoUserAnswers} DaycoUserAnswers
  * @typedef {import('../types.mjs').Post} Post
+ * @typedef {import('../types.mjs').DaycoChoiceOption} DaycoChoiceOption
  */
 
 import { storage } from '../storage/storage.mjs'
 import { POST } from '../types.mjs'
 
 /**
- * @param {UserAnswers} userAnswers
- * @returns {Promise<ChoiceOption[]>}
+ * @param {DaycoUserAnswers} userAnswers
+ * @returns {Promise<DaycoChoiceOption[]>}
  */
 export const buildNouveautesDeAbonnementOptions = async (userAnswers) => {
-  const abonnement = userAnswers['nouveautesParAbonnement']
+  const abonnement = userAnswers.get('nouveautesParAbonnement')
 
   /** @type {Post[]} */
   const posts = await storage.findAllThings(POST)
@@ -21,11 +21,10 @@ export const buildNouveautesDeAbonnementOptions = async (userAnswers) => {
     .filter((post) => post.feedId === abonnement)
     .map(
       (post) =>
-        /** @type {ChoiceOption} */ ({
+        /** @type {DaycoChoiceOption} */ ({
           value: post.id,
           label: post.title,
           url: post.url,
-          tags: ['list-item'],
           goto: 'nouveaute',
         })
     )

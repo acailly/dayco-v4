@@ -7,6 +7,22 @@ import { getOrSetId } from '../get-or-set-id/get-or-set-id.mjs'
 export const HTML_ACTION_EVENT = new Event('htmlAction')
 
 /**
+ * @param {unknown} value
+ * @returns {string}
+ */
+export const valueAsBase64String = (value) => {
+  return btoa(JSON.stringify(value))
+}
+
+/**
+ * @param {string} base64String
+ * @returns {any}
+ */
+export const valueFromBase64String = (base64String) => {
+  return JSON.parse(atob(base64String))
+}
+
+/**
  * @template {Element} T
  * @param {T} element
  * @returns {T}
