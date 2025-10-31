@@ -4,9 +4,9 @@
  * @typedef {import('./types.mjs').DaycoChoiceRegistry} DaycoChoiceRegistry
  */
 
-import { buildAbonnementsOptions } from './actions/buildAbonnementsOptions.mjs'
-import { buildNouveautesDeAbonnementOptions } from './actions/buildNouveautesDeAbonnementOptions.mjs'
-import { buildNouveautesParAbonnementOptions } from './actions/buildNouveautesParAbonnementOptions.mjs'
+import { buildAbonnementsOptions } from './options/buildAbonnementsOptions.mjs'
+import { buildNouveautesDeAbonnementOptions } from './options/buildNouveautesDeAbonnementOptions.mjs'
+import { buildNouveautesParAbonnementOptions } from './options/buildNouveautesParAbonnementOptions.mjs'
 import { importerAbonnements } from './actions/importerAbonnements.mjs'
 import { marquerCommeLu } from './actions/marquerCommeLu.mjs'
 import { marquerToutCommeLu } from './actions/marquerToutCommeLu.mjs'
@@ -18,6 +18,7 @@ import { exporterAbonnements } from './actions/exporterAbonnements.mjs'
 import html from '../shared/html/html-tag.mjs'
 import { FORM_SUMIT_OPTION_VALUE } from '../framework/engine/user-choices.mjs'
 import { AFTER_TITLE, CHIP } from '../framework/components/dynamic-form.component.mjs'
+import { buildNouveautesDeAbonnementTitle } from './content/buildNouveautesDeAbonnementTitle.mjs'
 
 /** @type {DaycoChoiceRegistry} */
 export const APP_CHOICES = {
@@ -61,7 +62,7 @@ export const APP_CHOICES = {
       rememberOptions: false,
     },
     nouveautesDeAbonnement: {
-      staticTitle: "Les nouveautés de l'abonnement",
+      dynamicTitle: buildNouveautesDeAbonnementTitle,
       staticOptions: [
         {
           value: 'marquerToutCommeLu',
@@ -111,7 +112,7 @@ export const APP_CHOICES = {
     },
     nomNouvelAbonnement: {
       staticTitle: 'Saisissez le nom du nouvel abonnement',
-      // TODO ACY utiliser le dynamicForm pour placer un autofocus sur ce champ uniquement si userAnswer est vide
+      // TODO ACY ICI utiliser le dynamicForm pour placer un autofocus sur ce champ uniquement si userAnswer est vide
       staticForm: html`<input name="nom" type="text" required />`,
       staticOptions: [
         {
@@ -130,7 +131,7 @@ export const APP_CHOICES = {
     },
     urlNouvelAbonnement: {
       staticTitle: "Saisissez l'adresse (URL) du nouvel abonnement",
-      // TODO ACY utiliser le dynamicForm pour placer un autofocus sur ce champ uniquement si userAnswer est vide
+      // TODO ACY ICI utiliser le dynamicForm pour placer un autofocus sur ce champ uniquement si userAnswer est vide
       staticForm: html`<input name="url" type="text" required />`,
       staticOptions: [
         {

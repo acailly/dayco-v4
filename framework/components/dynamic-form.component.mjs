@@ -21,7 +21,7 @@ export const AFTER_TITLE = 'after-title'
  * Render each choice in the following format:
  *
  * --------------------
- * TITLE = [/] staticTitle followed by [X] dynamicTitle
+ * TITLE = [/] staticTitle followed by [/] dynamicTitle
  *
  * AFTER TITLE CHIP OPTIONS = [/] options [chip][after-title] from staticOptions/dynamicOptions
  *
@@ -56,7 +56,11 @@ export default class extends HTMLElement {
             async (choice, choiceIndex) => html`
               <article id="${choice.choiceID}" class="choice-container">
                 <header class="choice-header">
-                  <h2>${choice.staticTitle ?? ''}</h2>
+                  <h2>
+                    ${choice.staticTitle ?? ''}${choice.dynamicTitle
+                      ? await choice.dynamicTitle(this.userChoices.userAnswers)
+                      : ''}
+                  </h2>
                   <a
                     class="light-text"
                     href="#${choiceIndex > 0 ? this.userChoices.choices[choiceIndex - 1].choiceID : ''}"

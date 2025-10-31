@@ -30,6 +30,7 @@ import MutableListenableData from '../../shared/listenable-data/listenableData.m
  * @template {string} T
  * @typedef {object} CustomChoiceDefinition<T>
  * @property {string} [staticTitle]
+ * @property {(userAnswers: UserAnswers) => Promise<string>} [dynamicTitle]
  * @property {string} [staticContent]
  * @property {(userAnswers: UserAnswers) => Promise<string>} [dynamicContent]
  * @property {string} [staticForm]
