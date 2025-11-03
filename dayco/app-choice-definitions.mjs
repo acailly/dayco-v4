@@ -19,6 +19,8 @@ import html from '../shared/html/html-tag.mjs'
 import { FORM_SUMIT_OPTION_VALUE } from '../framework/engine/user-choices.mjs'
 import { AFTER_TITLE, CHIP } from '../framework/components/dynamic-form.component.mjs'
 import { buildNouveautesDeAbonnementTitle } from './content/buildNouveautesDeAbonnementTitle.mjs'
+import { buildNomAbonnementForm } from './forms/buildNomAbonnementForm.mjs'
+import { buildUrlAbonnementForm } from './forms/buildUrlAbonnementForm.mjs'
 
 /** @type {DaycoChoiceRegistry} */
 export const APP_CHOICES = {
@@ -112,8 +114,7 @@ export const APP_CHOICES = {
     },
     nomNouvelAbonnement: {
       staticTitle: 'Saisissez le nom du nouvel abonnement',
-      // TODO ACY ICI utiliser le dynamicForm pour placer un autofocus sur ce champ uniquement si userAnswer est vide
-      staticForm: html`<input name="nom" type="text" required />`,
+      dynamicForm: buildNomAbonnementForm,
       staticOptions: [
         {
           value: 'annuler',
@@ -131,8 +132,7 @@ export const APP_CHOICES = {
     },
     urlNouvelAbonnement: {
       staticTitle: "Saisissez l'adresse (URL) du nouvel abonnement",
-      // TODO ACY ICI utiliser le dynamicForm pour placer un autofocus sur ce champ uniquement si userAnswer est vide
-      staticForm: html`<input name="url" type="text" required />`,
+      dynamicForm: buildUrlAbonnementForm,
       staticOptions: [
         {
           value: 'annuler',

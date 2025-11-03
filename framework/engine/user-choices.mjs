@@ -34,6 +34,7 @@ import MutableListenableData from '../../shared/listenable-data/listenableData.m
  * @property {string} [staticContent]
  * @property {(userAnswers: UserAnswers) => Promise<string>} [dynamicContent]
  * @property {string} [staticForm]
+ * @property {(userAnswers: UserAnswers) => Promise<string>} [dynamicForm]
  * @property {CustomChoiceOption<T>[]} [staticOptions]
  * @property {(userAnswers: UserAnswers) => Promise<CustomChoiceOption<T>[]>} [dynamicOptions]
  * @property {boolean} [rememberOptions]

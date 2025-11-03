@@ -16,22 +16,20 @@ export const CHIP = 'chip'
 export const AFTER_TITLE = 'after-title'
 
 /**
- * TODO ACY ICI finir d'implémenter
- *
  * Render each choice in the following format:
  *
  * --------------------
- * TITLE = [/] staticTitle followed by [/] dynamicTitle
+ * TITLE = staticTitle followed by dynamicTitle
  *
- * AFTER TITLE CHIP OPTIONS = [/] options [chip][after-title] from staticOptions/dynamicOptions
+ * AFTER TITLE CHIP OPTIONS = options [chip][after-title] from staticOptions/dynamicOptions
  *
- * CONTENT = [/] staticContent followed by [/] dynamicContent
+ * CONTENT = staticContent followed by dynamicContent
  *
- * FORM = [/] staticForm followed by [X] dynamicForm
+ * FORM = staticForm followed by dynamicForm
  *
- * CHIP OPTIONS = [/] options [chip] from staticOptions/dynamicOptions
+ * CHIP OPTIONS = options [chip] from staticOptions/dynamicOptions
  *
- * OPTIONS = [/] list of other options from staticOptions/dynamicOptions
+ * OPTIONS = list of other options from staticOptions/dynamicOptions
  * --------------------
  */
 export default class extends HTMLElement {
@@ -81,11 +79,21 @@ export default class extends HTMLElement {
       <pre>${JSON.stringify(this.userChoices.choices, null, 2)}</pre> -->
     `
 
-    // scroll to the last choice
+    // Scroll to the last choice
     const choiceContainers = document.querySelectorAll('.choice-container')
     if (choiceContainers.length) {
       const lastChoiceContainer = choiceContainers.item(choiceContainers.length - 1)
       lastChoiceContainer.scrollIntoView({ behavior: 'smooth' })
+
+      // ... and focus the first form element
+      // (inspired by https://gomakethings.com/how-to-get-the-first-and-last-focusable-elements-in-the-dom/)
+      const focusable = lastChoiceContainer.querySelectorAll(
+        'button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      )
+      const firstFocusable = /** @type {HTMLElement?} */ (focusable[0])
+      if (firstFocusable) {
+        firstFocusable.focus()
+      }
     }
   }
 
@@ -97,7 +105,7 @@ export default class extends HTMLElement {
     return [
       this.renderAfterTitleChipOptions(choice),
       await this.renderContent(choice),
-      this.renderForm(choice),
+      await this.renderForm(choice),
       this.renderChipOptions(choice),
       this.renderListItemOptions(choice),
     ].join('\n')
@@ -125,11 +133,18 @@ export default class extends HTMLElement {
 
   /**
    * @param {Choice} choice
-   * @returns {string}
+   * @returns {Promise<string>}
    */
-  renderForm = (choice) => {
-    const form = choice.staticForm
-    if (form) {
+  renderForm = async (choice) => {
+    const form = []
+    if (choice.staticForm) {
+      form.push(choice.staticForm)
+    }
+    const dynamicForm = await choice.dynamicForm?.(this.userChoices.userAnswers)
+    if (dynamicForm) {
+      form.push(dynamicForm)
+    }
+    if (form.length) {
       const userAnswerKeyPrefix = `${choice.choiceID}.`
       const currentValue = Array.from(this.userChoices.userAnswers.entries())
         .filter(([key]) => key.startsWith(userAnswerKeyPrefix))
@@ -151,7 +166,7 @@ export default class extends HTMLElement {
             id="${this.getFormId(choice)}"
             onsubmit="${htmlAction(this).onSubmit(choice.choiceID, HTML_ACTION_EVENT)}"
           >
-            ${form}
+            ${form.join('\n')}
             <i>Current value is: <b>${currentValue}</b></i>
           </form>
         </section>
