@@ -2,6 +2,7 @@ import './fetch-list-item.component.mjs'
 import html from '../../shared/html/html-tag.mjs'
 import { getFeedsFetcher } from '../main.mjs'
 import compareString from '../../shared/strings/compareString.mjs'
+import sanitize from '../../shared/html/html-sanitize.mjs'
 
 /** @typedef {import("../types.mjs").Feed} Feed  */
 /**
@@ -29,14 +30,16 @@ export default class extends HTMLElement {
    */
   render(fetchStatuses) {
     const choiceID = this.getAttribute('choice-id')
-    this.innerHTML = html` <option-list choice-id="${choiceID}"></option-list>
-      <ul>
-        ${[...fetchStatuses]
-          .sort(($fetchStatusA, $fetchStatusB) => {
-            return compareString($fetchStatusA.get().feed.title, $fetchStatusB.get().feed.title)
-          })
-          .map(($fetchStatus) => html`<fetch-list-item id="${$fetchStatus.get().feed.id}"></fetch-list-item>`)
-          .join('\n')}
-      </ul>`
+    this.innerHTML = sanitize(
+      html` <option-list choice-id="${choiceID}"></option-list>
+        <ul>
+          ${[...fetchStatuses]
+            .sort(($fetchStatusA, $fetchStatusB) => {
+              return compareString($fetchStatusA.get().feed.title, $fetchStatusB.get().feed.title)
+            })
+            .map(($fetchStatus) => html`<fetch-list-item id="${$fetchStatus.get().feed.id}"></fetch-list-item>`)
+            .join('\n')}
+        </ul>`
+    )
   }
 }

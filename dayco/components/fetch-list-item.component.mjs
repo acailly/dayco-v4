@@ -1,6 +1,7 @@
 import { getFeedsFetcher } from '../main.mjs'
 import html from '../../shared/html/html-tag.mjs'
 import spinner from '../../shared/spinner/spinner.mjs'
+import sanitize from '../../shared/html/html-sanitize.mjs'
 
 /** @typedef {import("../types.mjs").Feed} Feed  */
 /** @typedef {import('../feed-fetcher/feedFetcher.mjs').FetchStatus} FetchStatus */
@@ -39,13 +40,15 @@ export default class extends HTMLElement {
   render(fetchStatus) {
     switch (fetchStatus.type) {
       case 'SUCCESS': {
-        this.innerHTML = html` <li>
-          <span>${fetchStatus.feed.title} ✅</span>
-        </li>`
+        this.innerHTML = sanitize(
+          html` <li>
+            <span>${fetchStatus.feed.title} ✅</span>
+          </li>`
+        )
         break
       }
       case 'ERROR': {
-        this.innerHTML = html`
+        this.innerHTML = sanitize(html`
           <li>
             <span>${fetchStatus.feed.title} ❌</span>
             <small>
@@ -58,14 +61,16 @@ export default class extends HTMLElement {
               </details>
             </small>
           </li>
-        `
+        `)
         break
       }
       case 'LOADING':
       default: {
-        this.innerHTML = html`<li>
-          <span> ${fetchStatus.feed.title} ${spinner}</span>
-        </li>`
+        this.innerHTML = sanitize(
+          html`<li>
+            <span> ${fetchStatus.feed.title} ${spinner}</span>
+          </li>`
+        )
       }
     }
   }

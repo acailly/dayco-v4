@@ -1,5 +1,6 @@
 import { FORM_SUMIT_OPTION_VALUE, NOOP_OPTION_VALUE } from '../../framework/engine/user-choices.mjs'
 import { HTML_ACTION_EVENT, htmlAction } from '../../shared/html-action/html-action.mjs'
+import sanitize from '../../shared/html/html-sanitize.mjs'
 import html from '../../shared/html/html-tag.mjs'
 import spinner from '../../shared/spinner/spinner.mjs'
 import { getUserChoices } from '../globals/user-choices.mjs'
@@ -46,7 +47,7 @@ export default class extends HTMLElement {
 
   render = async () => {
     // TODO ACY rendre le code plus propre
-    this.innerHTML = html`
+    this.innerHTML = sanitize(html`
       <h1 id="main-title">${this.userChoices.choiceDefinitionRegistry?.title}</h1>
       ${(
         await Promise.all(
@@ -77,7 +78,7 @@ export default class extends HTMLElement {
 
       <h2>Debug choices</h2>
       <pre>${JSON.stringify(this.userChoices.choices, null, 2)}</pre> -->
-    `
+    `)
 
     // Scroll to the last choice
     const choiceContainers = document.querySelectorAll('.choice-container')
