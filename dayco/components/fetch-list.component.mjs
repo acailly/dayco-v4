@@ -2,7 +2,7 @@ import './fetch-list-item.component.mjs'
 import html from '../../shared/html/html-tag.mjs'
 import { getFeedsFetcher } from '../main.mjs'
 import compareString from '../../shared/strings/compareString.mjs'
-import sanitize from '../../shared/html/html-sanitize.mjs'
+import { sanitizeHTML } from '../../shared/html/html-sanitize.mjs'
 
 /** @typedef {import("../types.mjs").Feed} Feed  */
 /**
@@ -30,7 +30,7 @@ export default class extends HTMLElement {
    */
   render(fetchStatuses) {
     const choiceID = this.getAttribute('choice-id')
-    this.innerHTML = sanitize(
+    this.innerHTML = sanitizeHTML(
       html` <option-list choice-id="${choiceID}"></option-list>
         <ul>
           ${[...fetchStatuses]

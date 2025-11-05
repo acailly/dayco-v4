@@ -1,6 +1,6 @@
 import DOMPurify from '../../vendors/dom-purify/purify.es.mjs'
 
-const DOM_PURIFY_CONFIG = {
+const DOM_PURIFY_CONFIG_HTML = {
   ADD_ATTR: ['onclick', 'onsubmit', 'form'],
   CUSTOM_ELEMENT_HANDLING: {
     tagNameCheck: () => true,
@@ -12,11 +12,19 @@ const DOM_PURIFY_CONFIG = {
 /**
  * Sanitize HTML content
  *
- * @param {string} text
+ * @param {string} content
  * @returns {string}
  */
-function sanitize(text) {
-  return DOMPurify.sanitize(text, DOM_PURIFY_CONFIG)
+export function sanitizeHTML(content) {
+  return DOMPurify.sanitize(content, DOM_PURIFY_CONFIG_HTML)
 }
 
-export default sanitize
+/**
+ * Sanitize text content
+ *
+ * @param {string} content
+ * @returns {string}
+ */
+export function sanitizeText(content) {
+  return DOMPurify.sanitize(content)
+}

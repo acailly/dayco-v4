@@ -1,6 +1,6 @@
 import { FORM_SUMIT_OPTION_VALUE, NOOP_OPTION_VALUE } from '../../framework/engine/user-choices.mjs'
 import { HTML_ACTION_EVENT, htmlAction } from '../../shared/html-action/html-action.mjs'
-import sanitize from '../../shared/html/html-sanitize.mjs'
+import { sanitizeHTML, sanitizeText } from '../../shared/html/html-sanitize.mjs'
 import html from '../../shared/html/html-tag.mjs'
 import spinner from '../../shared/spinner/spinner.mjs'
 import { getUserChoices } from '../globals/user-choices.mjs'
@@ -47,7 +47,7 @@ export default class extends HTMLElement {
 
   render = async () => {
     // TODO ACY rendre le code plus propre
-    this.innerHTML = sanitize(html`
+    this.innerHTML = sanitizeHTML(html`
       <h1 id="main-title">${this.userChoices.choiceDefinitionRegistry?.title}</h1>
       ${(
         await Promise.all(
@@ -362,10 +362,34 @@ export default class extends HTMLElement {
     this.currentExecutingOption = userAnswer
     this.render()
 
-    await this.userChoices.answer(choiceID, userAnswer, submittedFormValues)
+    const sanitizedFormValues = this.sanitizeFormValues(submittedFormValues)
+    await this.userChoices.answer(choiceID, userAnswer, sanitizedFormValues)
 
     this.currentExecutingOption = null
     this.render()
+  }
+
+  /**
+   * @param {SubmittedFormValues} [formValues]
+   * @return {SubmittedFormValues | undefined}
+   */
+  sanitizeFormValues(formValues) {
+    if (!formValues) {
+      return formValues
+    }
+
+    /** @type {SubmittedFormValues} */
+    const result = {}
+
+    for (const [key, value] of Object.entries(formValues)) {
+      if (Array.isArray(value)) {
+        result[key] = value.map((v) => sanitizeText(v))
+      } else {
+        result[key] = sanitizeText(value)
+      }
+    }
+
+    return result
   }
 
   stopPropagation = (/** @type {Event} */ event) => {
