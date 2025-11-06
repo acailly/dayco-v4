@@ -139,6 +139,10 @@ dynamic-form {
             h2 {
                 font-size: 1.25rem;
             }
+
+            > *:last-child {
+                flex-shrink: 0;
+            }
         }
 
         &:last-of-type {
