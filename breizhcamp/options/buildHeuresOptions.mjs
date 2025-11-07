@@ -6,6 +6,7 @@
 
 import { CHIP } from '../../framework/components/dynamic-form.component.mjs'
 import { getHorairesDuJour } from '../schedule.mjs'
+import { formatHoraire } from '../utils/formatHoraire.mjs'
 
 /**
  * @param {BreizhCampUserAnswers} userAnswers
@@ -18,7 +19,7 @@ export const buildHeuresOptions = async (userAnswers) => {
 
   return horaires.map((horaire) => ({
     value: horaire,
-    label: horaire,
+    label: formatHoraire(horaire),
     goto: 'talks',
     tags: [CHIP],
   }))

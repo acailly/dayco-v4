@@ -115,6 +115,10 @@ form {
     }
 }
 
+p {
+    line-height: 150%;
+}
+
 dynamic-form {
     display: flex;
     flex-direction: column;

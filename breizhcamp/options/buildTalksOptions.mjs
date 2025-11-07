@@ -4,7 +4,9 @@
  * @typedef {import('../types.mjs').Jour} Jour
  */
 
+import html from '../../shared/html/html-tag.mjs'
 import { getTalksFromHoraire } from '../schedule.mjs'
+import { formatHoraire } from '../utils/formatHoraire.mjs'
 
 /**
  * @param {BreizhCampUserAnswers} userAnswers
@@ -16,9 +18,12 @@ export const buildTalksOptions = async (userAnswers) => {
 
   const talks = getTalksFromHoraire(jour, heure)
 
-  return talks.map((talk) => ({
+  const sortedTalks = [...talks].sort((a, b) => a.venue_id.localeCompare(b.venue_id))
+
+  return sortedTalks.map((talk) => ({
     value: talk.id,
-    label: talk.name,
+    label: html`${talk.name} -
+      <i>${talk.venue} (${formatHoraire(talk.event_start)} - ${formatHoraire(talk.event_end)})</i>`,
     goto: 'talk',
   }))
 }

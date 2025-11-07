@@ -54,6 +54,7 @@ export default class extends HTMLElement {
           this.userChoices.choices.map(
             async (choice, choiceIndex) => html`
               <article id="${choice.choiceID}" class="choice-container">
+                <!-- TODO ACY si title vide, ne pas afficher header pour avoir possibilité d'un affichage plus compact -->
                 <header class="choice-header">
                   <h2>
                     ${choice.staticTitle ?? ''}${choice.dynamicTitle
