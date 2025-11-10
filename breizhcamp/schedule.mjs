@@ -8,11 +8,10 @@ import { SCHEDULE } from './schedule.data.mjs'
 import { JEUDI, MERCREDI, VENDREDI } from './types.mjs'
 
 /**
- * @param {Talk} talk
+ * @param {Date} date
  * @return {Jour}
  */
-const getJourDuTalk = (talk) => {
-  const date = new Date(talk.event_start)
+export const getJourDeDate = (date) => {
   if (date.getDay() === 3) {
     return MERCREDI
   }
@@ -22,7 +21,16 @@ const getJourDuTalk = (talk) => {
   if (date.getDay() === 5) {
     return VENDREDI
   }
-  throw new Error(`jour non reconnu: ${date.getDay()} (${talk.event_start})`)
+  throw new Error(`jour non reconnu: ${date.getDay()} (${date.toISOString()})`)
+}
+
+/**
+ * @param {Talk} talk
+ * @return {Jour}
+ */
+const getJourDuTalk = (talk) => {
+  const date = new Date(talk.event_start)
+  return getJourDeDate(date)
 }
 
 /** @type {Record<Jour, Record<string, Talk[]>>} */

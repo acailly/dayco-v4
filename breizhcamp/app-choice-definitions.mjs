@@ -3,6 +3,7 @@
  */
 
 import { CHIP } from '../framework/components/dynamic-form.component.mjs'
+import { afficherTalksMaintenant } from './actions/afficherTalksMaintenant.mjs'
 import { buildTalkContent } from './content/buildTalkContent.mjs'
 import { buildTalksTitle } from './content/buildTalksTitle.mjs'
 import { buildTalkTitle } from './content/buildTalkTitle.mjs'
@@ -12,7 +13,6 @@ import { buildTalksOptions } from './options/buildTalksOptions.mjs'
 import { JEUDI, MERCREDI, VENDREDI } from './types.mjs'
 
 // TODO ACY ICI ajouter la fonction de stockage des réponses dans l'URL (?)
-// TODO ACY ICI ajouter une option "Maintenant" dans le choix du jour qui selectionne automatiquement jour + horaire
 // TODO ACY ICI en faire une PWA
 
 /** @type {BreizhCampChoiceRegistry} */
@@ -39,6 +39,13 @@ export const APP_CHOICES = {
           value: VENDREDI,
           label: 'Vendredi',
           goto: 'heure',
+          tags: [CHIP],
+        },
+        {
+          value: 'maintenant',
+          label: 'Maintenant',
+          updateUserAnswers: afficherTalksMaintenant,
+          goto: 'talks',
           tags: [CHIP],
         },
       ],
