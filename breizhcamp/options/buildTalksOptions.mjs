@@ -6,6 +6,7 @@
 
 import html from '../../shared/html/html-tag.mjs'
 import { getTalksFromHoraire } from '../schedule.mjs'
+import { isFavoriteTalk } from '../storage.mjs'
 import { formatHoraire } from '../utils/formatHoraire.mjs'
 
 /**
@@ -20,10 +21,13 @@ export const buildTalksOptions = async (userAnswers) => {
 
   const sortedTalks = [...talks].sort((a, b) => a.venue_id.localeCompare(b.venue_id))
 
-  return sortedTalks.map((talk) => ({
-    value: talk.id,
-    label: html`${talk.name} -
-      <i>${talk.venue} (${formatHoraire(talk.event_start)} - ${formatHoraire(talk.event_end)})</i>`,
-    goto: 'talk',
-  }))
+  return sortedTalks.map((talk) => {
+    const isFavorite = isFavoriteTalk(talk.id)
+    return {
+      value: talk.id,
+      label: html`${isFavorite ? '⭐ ' : ''}${talk.name} -
+        <i>${talk.venue} (${formatHoraire(talk.event_start)} - ${formatHoraire(talk.event_end)})</i>`,
+      goto: 'talk',
+    }
+  })
 }

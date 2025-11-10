@@ -1,31 +1,11 @@
 /**
  * @typedef {import('./types.mjs').Jour} Jour
+ * @typedef {import('./types.mjs').Talk} Talk
  */
 
 /** @type {Talk[]} */
 import { SCHEDULE } from './schedule.data.mjs'
 import { JEUDI, MERCREDI, VENDREDI } from './types.mjs'
-
-// Reorganize the content to make it easier to
-
-/**
- * @typedef {object} Talk
- *
- * @property {string} id
- * @property {string} name
- * @property {string?} description
- * @property {string} speakers
- * @property {string} format
- * @property {string} venue
- * @property {string} venue_id
- * @property {string} event_start
- * @property {string} event_end
- * @property {string} event_type
- * @property {string?} video_url
- * @property {string?} files_url
- * @property {string?} slides_url
- * @property {string?} level
- */
 
 /**
  * @param {Talk} talk

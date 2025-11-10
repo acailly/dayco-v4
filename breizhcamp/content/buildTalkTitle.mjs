@@ -3,6 +3,7 @@
  */
 
 import { getTalk } from '../schedule.mjs'
+import { isFavoriteTalk } from '../storage.mjs'
 
 /**
  * @param {BreizhCampUserAnswers} userAnswers
@@ -13,5 +14,7 @@ export const buildTalkTitle = async (userAnswers) => {
 
   const talk = getTalk(talkID)
 
-  return talk.name
+  const isFavorite = isFavoriteTalk(talkID)
+
+  return `${isFavorite ? '⭐ ' : ''}${talk.name}`
 }
