@@ -12,8 +12,8 @@ import { buildTalkOptions } from './options/buildTalkOptions.mjs'
 import { buildTalksOptions } from './options/buildTalksOptions.mjs'
 import { JEUDI, MERCREDI, VENDREDI } from './types.mjs'
 
-// TODO ACY ICI ajouter la fonction de stockage des réponses dans l'URL (?)
-// TODO ACY ICI en faire une PWA
+// TODO ACY ajouter la fonction de stockage des réponses dans l'URL (?)
+// TODO ACY ICI en faire une PWA (avec workbox-build, cf. https://eszter.space/pwa/, dayco et state-machine-rss-reader)
 
 /** @type {BreizhCampChoiceRegistry} */
 export const APP_CHOICES = {

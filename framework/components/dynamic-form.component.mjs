@@ -5,6 +5,16 @@ import html from '../../shared/html/html-tag.mjs'
 import spinner from '../../shared/spinner/spinner.mjs'
 import { getUserChoices } from '../globals/user-choices.mjs'
 
+// TODO ACY ICI Faire un équivalent de ce composant pour le SSG
+// Principe :
+// - chaque choix correspond à une page .html
+// - le contenu de la page est le même que le contenu d'un choix
+// - ... sauf que tout est calculé au moment de la génération
+// - ... sauf que les htmlAction sont remplacé par des liens
+// - ... sauf que les choix avec execute sont ignorés
+// - les urls sont /choiceIdA/answerA/choiceIdB/answerB/choiceIdC
+// TODO ACY ICI par contre je sais pas comment gérer les saisies au formulaire
+
 /**
  * @typedef {import('../../framework/engine/user-choices.mjs').UserAnswers} UserAnswers
  * @typedef {import('../../framework/engine/user-choices.mjs').Choice} Choice
